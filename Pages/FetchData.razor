@@ -1,0 +1,70 @@
+﻿@page "/fetchdata"
+
+@using blazor.Data
+@inject PeopleService MyPeopleService
+
+<h1>Star Wars Characters</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (peoples == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name </th>
+                <th>Birth Year</th>
+                <th>Gender</th>
+                <th>Hair Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in peoples)
+            {
+                <tr>
+                    <td>@person.Name</td>
+                    <td>@person.Birth_Year</td>
+                    <td>@person.Gender</td>
+                    <td>@person.Hair_Color</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-primary" @onclick="DecrementCount">Previous</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Next</button>
+
+
+@code {
+    private People[] peoples;
+
+    protected override async Task OnInitializedAsync()
+    {
+       await LoadData();
+    }
+
+
+    private async Task LoadData()
+    {
+        peoples = await MyPeopleService.GetPeopleAsync(currentCount);
+
+    }
+     private int currentCount = 1;
+
+    private async void IncrementCount()
+    {
+        currentCount++;
+        await LoadData();
+    }
+
+     private async void DecrementCount()
+    {
+        currentCount--;
+        await LoadData();
+    }
+}
