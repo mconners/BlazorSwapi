@@ -24,13 +24,8 @@ namespace blazor.Data
                 url = URL;
             }
 
-            // Get the user information.
             var jsonWrapper = await client.GetFromJsonAsync<JsonWrapper>(url);
-            //var count = jsonWrapper.Count;
-            
-            //var people = jsonWrapper.Results;
-
-          
+                   
             return jsonWrapper;
 
         }
