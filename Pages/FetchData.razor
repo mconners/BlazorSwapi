@@ -7,7 +7,7 @@
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (result == null)
+@if (people == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -23,7 +23,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var person in result.Results)
+            @foreach (var person in people.Results)
             {
                 <tr>
                     <td>@person.Name</td>
@@ -41,7 +41,7 @@ else
 
 
 @code {
-    private JsonWrapper result;
+    private People people;
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,7 +51,7 @@ else
 
     private async Task LoadData(string url)
     {
-        result = await MyPeopleService.GetPeopleAsync(url);
+        people = await MyPeopleService.GetPeopleAsync(url);
         await InvokeAsync(() => StateHasChanged())
                         .ConfigureAwait(false);
 
@@ -59,11 +59,11 @@ else
 
     private async void GetNext()
     {
-        await LoadData(result.Next);
+        await LoadData(people.Next);
     }
 
      private async void GetPrevious()
     {
-        await LoadData(result.Previous);
+        await LoadData(people.Previous);
     }
 }

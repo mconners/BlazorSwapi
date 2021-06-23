@@ -12,7 +12,7 @@ namespace blazor.Data
     {
         private static readonly string URL = @"https://swapi.dev/api/people/";
 
-        public async Task<JsonWrapper> GetPeopleAsync(string url)
+        public async Task<People> GetPeopleAsync(string url)
         {
 
             using HttpClient client = new()
@@ -24,7 +24,7 @@ namespace blazor.Data
                 url = URL;
             }
 
-            var jsonWrapper = await client.GetFromJsonAsync<JsonWrapper>(url);
+            var jsonWrapper = await client.GetFromJsonAsync<People>(url);
                    
             return jsonWrapper;
 
